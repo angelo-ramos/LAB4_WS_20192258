@@ -29,11 +29,11 @@ public class Controller {
 
     /*Employee info dado un employee id*/
     @GetMapping("tutor/infoEmployee")
-    public ResponseEntity<HashMap<String,Object>> obtenerEmployee(@RequestParam("id") String id){
+    public ResponseEntity<HashMap<String,Object>> obtenerEmployee(@RequestParam("id") Integer id){
         HashMap<String,Object> hashMap = new HashMap<>();
         try {
-            int idBuscar = Integer.parseInt(id);
-            Optional<Employees> byId = employeesRepository.findById(idBuscar);
+            //int idBuscar = Integer.parseInt(id);
+            Optional<Employees> byId = employeesRepository.findById(id);
             if (byId.isPresent()) {
                 hashMap.put("employee",byId.get());
             } else {
@@ -48,11 +48,11 @@ public class Controller {
 
     /*Tutor info dado un employee id*/
     @GetMapping("tutor/infoTutor")
-    public ResponseEntity<HashMap<String,Object>> obtenerTutor(@RequestParam("id") String id){
+    public ResponseEntity<HashMap<String,Object>> obtenerTutor(@RequestParam("id") Integer id){
         HashMap<String,Object> hashMap = new HashMap<>();
         try {
-            int idBuscar = Integer.parseInt(id);
-            Optional<Employees> byId = employeesRepository.findById(idBuscar);
+            //int idBuscar = Integer.parseInt(id);
+            Optional<Employees> byId = employeesRepository.findById(id);
             if (byId.isPresent()) {
                 hashMap.put("employee",byId.get());
             } else {
