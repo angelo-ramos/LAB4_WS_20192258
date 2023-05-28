@@ -1,7 +1,9 @@
 package com.example.lab4_ws_20192258.Controllers;
 
+import com.example.lab4_ws_20192258.Entities.Departments;
 import com.example.lab4_ws_20192258.Entities.Employees;
 import com.example.lab4_ws_20192258.Entities.Jobs;
+import com.example.lab4_ws_20192258.Repositories.DepartmentsRepository;
 import com.example.lab4_ws_20192258.Repositories.EmployeesRepository;
 import com.example.lab4_ws_20192258.Repositories.JobsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +23,51 @@ public class Controller {
     @Autowired
     JobsRepository jobsRepository;
 
+    @Autowired
+    DepartmentsRepository departmentsRepository;
+
     /*Listar trabajadores expeto al presidente*/
     @GetMapping("tutor/list")
     public List<Employees> listarCargos() {
         return employeesRepository.findAllByJobIdNot("AD_PRES");
+    }
+
+    /*Buscar JOBS*/
+    @GetMapping("tutor/job")
+    public ResponseEntity<HashMap<String,Object>> obtenerJob(@RequestParam("id") String id){
+        HashMap<String,Object> hashMap = new HashMap<>();
+        try {
+            //int idBuscar = Integer.parseInt(id);
+            Optional<Jobs> byId = jobsRepository.findById(id);
+            if (byId.isPresent()) {
+                hashMap.put("job",byId.get());
+            } else {
+                hashMap.put("msg","El Job con ese ID no existe");
+            }
+            return ResponseEntity.ok(hashMap);
+        } catch (NumberFormatException e) {
+            hashMap.put("msg","El id no es un número!!!");
+            return ResponseEntity.badRequest().body(hashMap);
+        }
+    }
+
+    /*Buscar departments*/
+    @GetMapping("tutor/depa")
+    public ResponseEntity<HashMap<String,Object>> obtenerDepa(@RequestParam("id") Integer id){
+        HashMap<String,Object> hashMap = new HashMap<>();
+        try {
+            //int idBuscar = Integer.parseInt(id);
+            Optional<Departments> byId = departmentsRepository.findById(id);
+            if (byId.isPresent()) {
+                hashMap.put("depa",byId.get());
+            } else {
+                hashMap.put("msg","El Department con ese ID no existe");
+            }
+            return ResponseEntity.ok(hashMap);
+        } catch (NumberFormatException e) {
+            hashMap.put("msg","El id no es un número!!!");
+            return ResponseEntity.badRequest().body(hashMap);
+        }
     }
 
     /*Employee info dado un employee id*/
