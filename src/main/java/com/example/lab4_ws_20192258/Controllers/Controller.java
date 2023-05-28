@@ -7,6 +7,8 @@ import com.example.lab4_ws_20192258.Repositories.DepartmentsRepository;
 import com.example.lab4_ws_20192258.Repositories.EmployeesRepository;
 import com.example.lab4_ws_20192258.Repositories.JobsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -107,4 +109,27 @@ public class Controller {
             return ResponseEntity.badRequest().body(hashMap);
         }
     }
+
+    //Asignar cita
+    @PostMapping(value = "/asignar",consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+    public ResponseEntity<HashMap<String,String>> asignar(Integer id){
+        HashMap<String,String> hashMap = new HashMap<>();
+
+        Optional<Employees> optionalProduct = employeesRepository.findById(id);
+        if(optionalProduct.isPresent()){
+            Employees employees = optionalProduct.get();
+
+            employees.setMeeting((byte) 1);
+
+            employeesRepository.save(employees);
+            hashMap.put("status", "actualizado");
+            return ResponseEntity.status(HttpStatus.CREATED).body(hashMap);
+        }else{
+            hashMap.put("status","error");
+            hashMap.put("msg","el employee a actualizar no existe");
+            return ResponseEntity.ok(hashMap);
+        }
+    }
+
+
 }
