@@ -6,10 +6,7 @@ import com.example.lab4_ws_20192258.Repositories.EmployeesRepository;
 import com.example.lab4_ws_20192258.Repositories.JobsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -31,8 +28,8 @@ public class Controller {
     }
 
     /*Employee info dado un employee id*/
-    @GetMapping("tutor/infoEmployee/{id}")
-    public ResponseEntity<HashMap<String,Object>> obtenerEmployee(@PathVariable("id") String id){
+    @GetMapping("tutor/infoEmployee")
+    public ResponseEntity<HashMap<String,Object>> obtenerEmployee(@RequestParam("id") String id){
         HashMap<String,Object> hashMap = new HashMap<>();
         try {
             int idBuscar = Integer.parseInt(id);
@@ -50,8 +47,8 @@ public class Controller {
     }
 
     /*Tutor info dado un employee id*/
-    @GetMapping("tutor/infoTutor/{id}")
-    public ResponseEntity<HashMap<String,Object>> obtenerTutor(@PathVariable("id") String id){
+    @GetMapping("tutor/infoTutor")
+    public ResponseEntity<HashMap<String,Object>> obtenerTutor(@RequestParam("id") String id){
         HashMap<String,Object> hashMap = new HashMap<>();
         try {
             int idBuscar = Integer.parseInt(id);
